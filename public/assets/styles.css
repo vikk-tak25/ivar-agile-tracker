@@ -626,12 +626,21 @@ menu {
 }
 
 .detail-panel {
-    background: color-mix(in srgb, var(--panel) 90%, transparent);
+    background: color-mix(in srgb, var(--panel) 96%, transparent);
     border: 1px solid var(--line);
     border-radius: 18px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 30px 80px rgb(0 0 0 / 32%);
     color: var(--text);
-    margin-bottom: 18px;
+    max-width: 720px;
+    padding: 0;
+    width: calc(100vw - 32px);
+}
+
+.detail-dialog-content {
+    display: grid;
+    gap: 10px;
+    max-height: min(820px, calc(100vh - 40px));
+    overflow: auto;
     padding: 20px;
 }
 

@@ -513,13 +513,16 @@ async function saveStory(event) {
 function openDetail(id) {
     state.selectedId = id;
     renderDetail();
-    elements.detailPanel.hidden = false;
-    elements.detailPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!elements.detailPanel.open) {
+        elements.detailPanel.showModal();
+    }
 }
 
 function closeDetail() {
     state.selectedId = null;
-    elements.detailPanel.hidden = true;
+    if (elements.detailPanel.open) {
+        elements.detailPanel.close();
+    }
 }
 
 function selectedStory() {
