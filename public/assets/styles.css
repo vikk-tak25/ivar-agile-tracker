@@ -7,8 +7,8 @@
     --muted: #66788a;
     --line: #d9e3ea;
     --line-strong: #c2d2dc;
-    --accent: #236a75;
-    --accent-dark: #174e57;
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
     --danger: #b42318;
     --todo: #f4c542;
     --doing: #4389d8;
@@ -28,8 +28,8 @@
     --muted: #9bb1bf;
     --line: #2d4552;
     --line-strong: #42606f;
-    --accent: #5ab3c1;
-    --accent-dark: #7fc6d1;
+    --accent: #60a5fa;
+    --accent-dark: #93c5fd;
     --danger: #ff8d83;
     --sidebar: #07131a;
     --sidebar-text: #d7e8ee;
@@ -43,7 +43,7 @@
 body {
     margin: 0;
     background:
-        radial-gradient(circle at top left, rgb(35 106 117 / 10%), transparent 34rem),
+        radial-gradient(circle at top left, rgb(37 99 235 / 10%), transparent 34rem),
         linear-gradient(180deg, color-mix(in srgb, var(--panel) 42%, var(--bg)) 0%, var(--bg) 34%);
     color: var(--text);
     min-height: 100vh;
@@ -94,7 +94,7 @@ button:hover {
 }
 
 .brand-mark {
-    background: linear-gradient(135deg, #2b7985, #66b3c1);
+    background: linear-gradient(135deg, #1d4ed8, #60a5fa);
     border-radius: 14px;
     box-shadow: 0 14px 28px rgb(0 0 0 / 22%);
     color: #fff;
@@ -280,7 +280,7 @@ input:focus,
 select:focus,
 textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgb(35 106 117 / 12%);
+    box-shadow: 0 0 0 4px rgb(37 99 235 / 14%);
     outline: 0;
 }
 
@@ -399,7 +399,7 @@ textarea {
 }
 
 .story-list.drag-over {
-    outline: 3px solid rgb(35 106 117 / 24%);
+    outline: 3px solid rgb(37 99 235 / 24%);
     outline-offset: -8px;
 }
 
