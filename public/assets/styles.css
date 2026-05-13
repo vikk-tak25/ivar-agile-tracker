@@ -227,7 +227,7 @@ textarea {
 .badge {
     background: #edf7f7;
     border: 1px solid #cae3e2;
-    border-radius: 999px;
+    border-radius: 4px;
     color: #1f6265;
     font-size: 12px;
     font-weight: 700;
@@ -356,4 +356,3 @@ menu {
         display: grid;
     }
 }
-
