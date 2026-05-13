@@ -13,6 +13,10 @@ const elements = {
     statusFilter: document.querySelector('#statusFilter'),
     pointsFilter: document.querySelector('#pointsFilter'),
     storyDialog: document.querySelector('#storyDialog'),
+    infoDialog: document.querySelector('#infoDialog'),
+    infoDialogTitle: document.querySelector('#infoDialogTitle'),
+    infoDialogBody: document.querySelector('#infoDialogBody'),
+    closeInfoDialogButton: document.querySelector('#closeInfoDialogButton'),
     storyForm: document.querySelector('#storyForm'),
     dialogTitle: document.querySelector('#dialogTitle'),
     storyId: document.querySelector('#storyId'),
@@ -43,6 +47,7 @@ applyTheme(localStorage.getItem('agileTrackerTheme') || 'light');
 
 document.querySelector('#newStoryButton').addEventListener('click', () => openForm());
 elements.themeToggle.addEventListener('click', toggleTheme);
+elements.closeInfoDialogButton.addEventListener('click', () => elements.infoDialog.close());
 elements.navItems.forEach((button) => {
     button.addEventListener('click', () => handleNavAction(button.dataset.navAction));
 });
@@ -155,6 +160,15 @@ function filteredStories() {
     });
 }
 
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
 function handleNavAction(action) {
     state.navMode = action === 'comments' ? 'comments' : 'kanban';
     elements.navItems.forEach((button) => {
@@ -192,28 +206,92 @@ function handleNavAction(action) {
     }
 
     if (action === 'criteria') {
-        elements.search.value = '';
-        elements.statusFilter.value = '';
-        elements.pointsFilter.value = '';
-        showMessage('Vastuvõtutingimused on nähtavad iga story detailvaates. Ava story kaart, et neid vaadata.');
-        render();
-        scrollToBoard();
+        openCriteriaInfo();
         return;
     }
 
     if (action === 'api') {
-        showMessage('REST API endpoint’id on README-s ja andmed on saadaval aadressil /api/stories.');
-        window.open('/api/stories', '_blank', 'noopener');
+        openApiInfo();
         return;
     }
 
     if (action === 'sqlite') {
-        showMessage('SQLite andmebaas asub projektis failis data/agile_tracker.sqlite ja luuakse automaatselt.');
+        openSqliteInfo();
     }
 }
 
 function scrollToBoard() {
     document.querySelector('.board').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function openCriteriaInfo() {
+    const sections = state.stories.map((story) => `
+        <section class="info-section">
+            <h3>${escapeHtml(story.title)}</h3>
+            <ol class="info-list">
+                ${story.acceptanceCriteria.map((criterion) => `<li>${escapeHtml(criterion)}</li>`).join('')}
+            </ol>
+        </section>
+    `).join('');
+
+    openInfoDialog('Vastuvõtutingimused', sections || '<p>Storysid ei ole veel lisatud.</p>');
+    showMessage('');
+}
+
+function openApiInfo() {
+    openInfoDialog('REST API', `
+        <section class="info-section">
+            <h3>Endpoint’id</h3>
+            <ul class="info-list">
+                <li><span class="info-code">GET /api/stories</span> - kõik story’d</li>
+                <li><span class="info-code">GET /api/stories/:id</span> - üks story</li>
+                <li><span class="info-code">POST /api/stories</span> - story loomine</li>
+                <li><span class="info-code">PUT /api/stories/:id</span> - story muutmine</li>
+                <li><span class="info-code">DELETE /api/stories/:id</span> - story kustutamine</li>
+                <li><span class="info-code">PATCH /api/stories/:id/status</span> - staatuse muutmine</li>
+                <li><span class="info-code">PATCH /api/stories/reorder</span> - backlogi järjestus</li>
+                <li><span class="info-code">POST /api/stories/:id/comments</span> - kommentaari lisamine</li>
+            </ul>
+        </section>
+        <section class="info-section">
+            <h3>Kiirlink</h3>
+            <p>JSON andmeid saab vaadata aadressil <span class="info-code">/api/stories</span>.</p>
+        </section>
+    `);
+    showMessage('');
+}
+
+function openSqliteInfo() {
+    const storyCount = state.stories.length;
+    const criteriaCount = state.stories.reduce((sum, story) => sum + story.acceptanceCriteria.length, 0);
+    const commentCount = state.stories.reduce((sum, story) => sum + story.comments.length, 0);
+
+    openInfoDialog('SQLite andmebaas', `
+        <section class="info-section">
+            <h3>Fail</h3>
+            <p>Andmebaas luuakse automaatselt ja asub projektis:</p>
+            <span class="info-code">data/agile_tracker.sqlite</span>
+        </section>
+        <section class="info-section">
+            <h3>Tabelid</h3>
+            <ul class="info-list">
+                <li><span class="info-code">stories</span> - ${storyCount} story kirjet</li>
+                <li><span class="info-code">acceptance_criteria</span> - ${criteriaCount} vastuvõtutingimust</li>
+                <li><span class="info-code">comments</span> - ${commentCount} kommentaari</li>
+            </ul>
+        </section>
+        <section class="info-section">
+            <h3>Salvestamine</h3>
+            <p>Story lisamine, muutmine, kustutamine, kommentaarid ja backlogi järjekord salvestatakse REST API kaudu SQLite andmebaasi.</p>
+        </section>
+    `);
+    showMessage('');
+}
+
+function openInfoDialog(title, html) {
+    elements.infoDialogTitle.textContent = title;
+    elements.infoDialogBody.innerHTML = html;
+    elements.infoDialog.showModal();
 }
 
 function storyCard(story) {
