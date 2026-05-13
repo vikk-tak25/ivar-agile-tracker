@@ -537,6 +537,21 @@ dialog::backdrop {
     padding: 14px;
 }
 
+.info-section-button {
+    color: var(--text);
+    cursor: pointer;
+    display: grid;
+    gap: 8px;
+    min-height: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.info-section-button:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgb(31 111 235 / 14%);
+}
+
 .info-section h3 {
     font-size: 15px;
     margin: 0 0 8px;
