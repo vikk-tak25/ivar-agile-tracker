@@ -30,7 +30,7 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=2">
+    <link rel="stylesheet" href="/assets/styles.css?v=3">
 </head>
 <body>
     <header class="topbar">
@@ -133,6 +133,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </aside>
 
-    <script src="/assets/app.js?v=2"></script>
+    <script src="/assets/app.js?v=3"></script>
 </body>
 </html>

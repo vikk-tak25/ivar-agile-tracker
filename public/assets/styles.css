@@ -219,18 +219,23 @@ textarea {
 }
 
 .card-meta {
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
 }
 
 .badge {
+    align-items: center;
     background: #edf7f7;
     border: 1px solid #cae3e2;
     border-radius: 0;
     color: #1f6265;
+    display: inline-flex;
     font-size: 12px;
     font-weight: 700;
+    height: 24px;
+    line-height: 1;
     padding: 3px 7px;
 }
 
