@@ -118,4 +118,4 @@ Testid käivitavad ajutise PHP serveri ja kasutavad ajutist SQLite andmebaasi.
 
 ## Ekraanipilt
 
-Lisa töötava Kanban-laua ekraanipilt kausta `screenshots/` ja viita sellele siin enne töö esitamist.
+![Töötav Kanban-laud](screenshots/kanban-board.png)
