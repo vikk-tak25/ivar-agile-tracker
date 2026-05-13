@@ -3,6 +3,7 @@ const state = {
     stories: [],
     selectedId: null,
     draggedId: null,
+    navMode: 'kanban',
 };
 
 const elements = {
@@ -35,12 +36,16 @@ const elements = {
     navStoryCount: document.querySelector('#navStoryCount'),
     navBacklogCount: document.querySelector('#navBacklogCount'),
     navCommentCount: document.querySelector('#navCommentCount'),
+    navItems: document.querySelectorAll('[data-nav-action]'),
 };
 
 applyTheme(localStorage.getItem('agileTrackerTheme') || 'light');
 
 document.querySelector('#newStoryButton').addEventListener('click', () => openForm());
 elements.themeToggle.addEventListener('click', toggleTheme);
+elements.navItems.forEach((button) => {
+    button.addEventListener('click', () => handleNavAction(button.dataset.navAction));
+});
 document.querySelector('#closeDetailButton').addEventListener('click', closeDetail);
 document.querySelector('#editStoryButton').addEventListener('click', () => {
     const story = selectedStory();
@@ -144,9 +149,71 @@ function filteredStories() {
             || (points === '0-3' && story.points <= 3)
             || (points === '4-8' && story.points >= 4 && story.points <= 8)
             || (points === '9+' && story.points >= 9);
+        const matchesNavMode = state.navMode !== 'comments' || story.comments.length > 0;
 
-        return matchesQuery && matchesStatus && matchesPoints;
+        return matchesQuery && matchesStatus && matchesPoints && matchesNavMode;
     });
+}
+
+function handleNavAction(action) {
+    state.navMode = action === 'comments' ? 'comments' : 'kanban';
+    elements.navItems.forEach((button) => {
+        button.classList.toggle('active', button.dataset.navAction === action);
+    });
+
+    if (action === 'kanban') {
+        elements.search.value = '';
+        elements.statusFilter.value = '';
+        elements.pointsFilter.value = '';
+        showMessage('');
+        render();
+        scrollToBoard();
+        return;
+    }
+
+    if (action === 'backlog') {
+        elements.search.value = '';
+        elements.statusFilter.value = 'todo';
+        elements.pointsFilter.value = '';
+        showMessage('Kuvatakse ainult Todo / Backlog story’d.');
+        render();
+        scrollToBoard();
+        return;
+    }
+
+    if (action === 'comments') {
+        elements.search.value = '';
+        elements.statusFilter.value = '';
+        elements.pointsFilter.value = '';
+        showMessage('Kuvatakse ainult story’d, millel on kommentaarid.');
+        render();
+        scrollToBoard();
+        return;
+    }
+
+    if (action === 'criteria') {
+        elements.search.value = '';
+        elements.statusFilter.value = '';
+        elements.pointsFilter.value = '';
+        showMessage('Vastuvõtutingimused on nähtavad iga story detailvaates. Ava story kaart, et neid vaadata.');
+        render();
+        scrollToBoard();
+        return;
+    }
+
+    if (action === 'api') {
+        showMessage('REST API endpoint’id on README-s ja andmed on saadaval aadressil /api/stories.');
+        window.open('/api/stories', '_blank', 'noopener');
+        return;
+    }
+
+    if (action === 'sqlite') {
+        showMessage('SQLite andmebaas asub projektis failis data/agile_tracker.sqlite ja luuakse automaatselt.');
+    }
+}
+
+function scrollToBoard() {
+    document.querySelector('.board').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function storyCard(story) {
