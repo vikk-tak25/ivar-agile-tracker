@@ -30,7 +30,7 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=9">
+    <link rel="stylesheet" href="/assets/styles.css?v=10">
 </head>
 <body>
     <div class="app-shell">
@@ -104,6 +104,17 @@ if (str_starts_with($path, '/api/')) {
             </section>
 
             <p class="message" id="message" role="status"></p>
+
+            <section class="inline-view" id="inlineView" hidden>
+                <div class="inline-view-header">
+                    <div>
+                        <h2 id="inlineViewTitle">Vaade</h2>
+                        <p id="inlineViewDescription"></p>
+                    </div>
+                    <button class="icon-button" id="closeInlineViewButton" type="button">×</button>
+                </div>
+                <div class="inline-view-body" id="inlineViewBody"></div>
+            </section>
 
             <section class="board" aria-label="Kanban-laud">
                 <article class="column" data-status="todo">
@@ -189,6 +200,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </aside>
 
-    <script src="/assets/app.js?v=9"></script>
+    <script src="/assets/app.js?v=10"></script>
 </body>
 </html>
