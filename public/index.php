@@ -30,7 +30,7 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=4">
+    <link rel="stylesheet" href="/assets/styles.css?v=5">
 </head>
 <body>
     <div class="app-shell">
@@ -44,14 +44,14 @@ if (str_starts_with($path, '/api/')) {
             </div>
 
             <div class="nav-label">Töölaud</div>
-            <button class="nav-item active" type="button"><span>Kanban</span><span class="nav-pill" id="navStoryCount">0</span></button>
-            <button class="nav-item" type="button"><span>Backlog</span><span class="nav-pill" id="navBacklogCount">0</span></button>
-            <button class="nav-item" type="button"><span>Kommentaarid</span><span class="nav-pill" id="navCommentCount">0</span></button>
+            <button class="nav-item active" data-nav-action="kanban" type="button"><span>Kanban</span><span class="nav-pill" id="navStoryCount">0</span></button>
+            <button class="nav-item" data-nav-action="backlog" type="button"><span>Backlog</span><span class="nav-pill" id="navBacklogCount">0</span></button>
+            <button class="nav-item" data-nav-action="comments" type="button"><span>Kommentaarid</span><span class="nav-pill" id="navCommentCount">0</span></button>
 
             <div class="nav-label">Projekt</div>
-            <button class="nav-item" type="button"><span>Vastuvõtutingimused</span></button>
-            <button class="nav-item" type="button"><span>REST API</span></button>
-            <button class="nav-item" type="button"><span>SQLite</span></button>
+            <button class="nav-item" data-nav-action="criteria" type="button"><span>Vastuvõtutingimused</span></button>
+            <button class="nav-item" data-nav-action="api" type="button"><span>REST API</span></button>
+            <button class="nav-item" data-nav-action="sqlite" type="button"><span>SQLite</span></button>
 
             <div class="sidebar-card">
                 <strong>PHP + SQLite</strong>
@@ -179,6 +179,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </aside>
 
-    <script src="/assets/app.js?v=4"></script>
+    <script src="/assets/app.js?v=5"></script>
 </body>
 </html>
