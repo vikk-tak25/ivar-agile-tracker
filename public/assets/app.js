@@ -8,11 +8,6 @@ const state = {
 
 const elements = {
     message: document.querySelector('#message'),
-    inlineView: document.querySelector('#inlineView'),
-    inlineViewTitle: document.querySelector('#inlineViewTitle'),
-    inlineViewDescription: document.querySelector('#inlineViewDescription'),
-    inlineViewBody: document.querySelector('#inlineViewBody'),
-    closeInlineViewButton: document.querySelector('#closeInlineViewButton'),
     themeToggle: document.querySelector('#themeToggle'),
     search: document.querySelector('#searchInput'),
     statusFilter: document.querySelector('#statusFilter'),
@@ -55,7 +50,6 @@ applyTheme(localStorage.getItem('agileTrackerTheme') || 'light');
 document.querySelector('#newStoryButton').addEventListener('click', () => openForm());
 elements.themeToggle.addEventListener('click', toggleTheme);
 elements.closeInfoDialogButton.addEventListener('click', () => elements.infoDialog.close());
-elements.closeInlineViewButton.addEventListener('click', closeInlineView);
 elements.generateStoryButton.addEventListener('click', generateStoryFromProblem);
 elements.navItems.forEach((button) => {
     button.addEventListener('click', () => handleNavAction(button.dataset.navAction));
@@ -189,7 +183,6 @@ function handleNavAction(action) {
         elements.statusFilter.value = '';
         elements.pointsFilter.value = '';
         showMessage('');
-        closeInlineView();
         render();
         scrollToBoard();
         return;
@@ -201,7 +194,7 @@ function handleNavAction(action) {
         elements.pointsFilter.value = '';
         showMessage('');
         render();
-        openBacklogInlineView();
+        openBacklogInfo();
         return;
     }
 
@@ -210,7 +203,6 @@ function handleNavAction(action) {
         elements.statusFilter.value = '';
         elements.pointsFilter.value = '';
         showMessage('');
-        closeInlineView();
         render();
         scrollToBoard();
         openCommentsInfo();
@@ -268,36 +260,6 @@ function openBacklogInfo() {
     `).join('');
 
     openInfoDialog('Backlogi järjekord', sections || '<p>Backlogis ei ole praegu ühtegi storyt.</p>');
-}
-
-function openBacklogInlineView() {
-    const backlogStories = state.stories
-        .filter((story) => story.status === 'todo')
-        .sort((a, b) => a.priority - b.priority || a.id - b.id);
-
-    const rows = backlogStories.map((story, index) => `
-        <article class="inline-story-row">
-            <h3>${index + 1}. ${escapeHtml(story.title)}</h3>
-            <p>${escapeHtml(story.description || 'Kirjeldus puudub.')}</p>
-            <div class="card-meta">
-                <span class="badge">${story.points} p</span>
-                <span class="badge">${story.acceptanceCriteria.length} ting.</span>
-                <span class="badge">${story.comments.length} komm.</span>
-                <span class="badge">priority ${story.priority}</span>
-            </div>
-        </article>
-    `).join('');
-
-    elements.inlineViewTitle.textContent = 'Todo / Backlog';
-    elements.inlineViewDescription.textContent = 'Backlogi story’d on siin prioriteedi järjekorras. Sama järjekord salvestub SQLite andmebaasi.';
-    elements.inlineViewBody.innerHTML = rows || '<p>Backlogis ei ole praegu ühtegi storyt.</p>';
-    elements.inlineView.hidden = false;
-    elements.inlineView.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function closeInlineView() {
-    elements.inlineView.hidden = true;
-    elements.inlineViewBody.innerHTML = '';
 }
 
 function openCommentsInfo() {
