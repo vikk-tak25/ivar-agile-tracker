@@ -63,6 +63,13 @@ Andmebaas luuakse automaatselt faili `data/agile_tracker.sqlite`. Kui andmebaas 
 - Igal story’l peab olema vähemalt üks vastuvõtutingimus.
 - Kommentaari tekst ei tohi olla tühi.
 
+## Drag-and-drop käitumine
+
+- Kaarti saab lohistada `todo`, `doing` ja `done` veergude vahel.
+- `Todo / Backlog` veeru järjekord salvestatakse `priority` väärtusena.
+- Pärast lohistamist saadab frontend kogu laua uue järjestuse endpoint’i `PATCH /api/stories/reorder`.
+- Lehe uuendamisel loetakse järjekord SQLite andmebaasist tagasi.
+
 ## REST API endpoint’id
 
 | Meetod | Endpoint | Kirjeldus |
