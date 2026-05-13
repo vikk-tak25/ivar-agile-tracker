@@ -30,7 +30,7 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=10">
+    <link rel="stylesheet" href="/assets/styles.css?v=11">
 </head>
 <body>
     <div class="app-shell">
@@ -116,6 +116,27 @@ if (str_starts_with($path, '/api/')) {
                 <div class="inline-view-body" id="inlineViewBody"></div>
             </section>
 
+            <section class="detail-panel" id="detailPanel" aria-live="polite" hidden>
+                <div class="detail-header">
+                    <h2 id="detailTitle"></h2>
+                    <button class="icon-button" id="closeDetailButton" type="button">×</button>
+                </div>
+                <p id="detailMeta"></p>
+                <p id="detailDescription"></p>
+                <h3>Vastuvõtutingimused</h3>
+                <ul id="detailCriteria"></ul>
+                <h3>Kommentaarid</h3>
+                <div id="detailComments"></div>
+                <form id="commentForm">
+                    <label>Uus kommentaar<textarea id="commentInput" rows="3"></textarea></label>
+                    <button class="primary-button" type="submit">Lisa kommentaar</button>
+                </form>
+                <div class="detail-actions">
+                    <button id="editStoryButton" type="button">Muuda</button>
+                    <button class="danger-button" id="deleteStoryButton" type="button">Kustuta</button>
+                </div>
+            </section>
+
             <section class="board" aria-label="Kanban-laud">
                 <article class="column" data-status="todo">
                     <header>
@@ -179,27 +200,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </dialog>
 
-    <aside class="detail-panel" id="detailPanel" aria-live="polite" hidden>
-        <div class="detail-header">
-            <h2 id="detailTitle"></h2>
-            <button class="icon-button" id="closeDetailButton" type="button">×</button>
-        </div>
-        <p id="detailMeta"></p>
-        <p id="detailDescription"></p>
-        <h3>Vastuvõtutingimused</h3>
-        <ul id="detailCriteria"></ul>
-        <h3>Kommentaarid</h3>
-        <div id="detailComments"></div>
-        <form id="commentForm">
-            <label>Uus kommentaar<textarea id="commentInput" rows="3"></textarea></label>
-            <button class="primary-button" type="submit">Lisa kommentaar</button>
-        </form>
-        <div class="detail-actions">
-            <button id="editStoryButton" type="button">Muuda</button>
-            <button class="danger-button" id="deleteStoryButton" type="button">Kustuta</button>
-        </div>
-    </aside>
-
-    <script src="/assets/app.js?v=10"></script>
+    <script src="/assets/app.js?v=11"></script>
 </body>
 </html>
