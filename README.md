@@ -70,6 +70,13 @@ Andmebaas luuakse automaatselt faili `data/agile_tracker.sqlite`. Kui andmebaas 
 - Pärast lohistamist saadab frontend kogu laua uue järjestuse endpoint’i `PATCH /api/stories/reorder`.
 - Lehe uuendamisel loetakse järjekord SQLite andmebaasist tagasi.
 
+## Lisafunktsioonid kõrgema tulemuse jaoks
+
+- Detailpaneel näitab kirjeldust, kuupäevi, vastuvõtutingimusi ja kommentaare.
+- Otsing töötab pealkirja ja kirjelduse põhjal.
+- Filtrid võimaldavad piirata vaadet staatuse või punktivahemiku järgi.
+- Iga veeru päises kuvatakse nähtavate story’de punktisumma.
+
 ## REST API endpoint’id
 
 | Meetod | Endpoint | Kirjeldus |
