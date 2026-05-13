@@ -189,9 +189,10 @@ function handleNavAction(action) {
         elements.search.value = '';
         elements.statusFilter.value = 'todo';
         elements.pointsFilter.value = '';
-        showMessage('Kuvatakse ainult Todo / Backlog story’d.');
+        showMessage('');
         render();
         scrollToBoard();
+        openBacklogInfo();
         return;
     }
 
@@ -199,9 +200,10 @@ function handleNavAction(action) {
         elements.search.value = '';
         elements.statusFilter.value = '';
         elements.pointsFilter.value = '';
-        showMessage('Kuvatakse ainult story’d, millel on kommentaarid.');
+        showMessage('');
         render();
         scrollToBoard();
+        openCommentsInfo();
         return;
     }
 
@@ -236,6 +238,42 @@ function openCriteriaInfo() {
 
     openInfoDialog('Vastuvõtutingimused', sections || '<p>Storysid ei ole veel lisatud.</p>');
     showMessage('');
+}
+
+function openBacklogInfo() {
+    const backlogStories = state.stories
+        .filter((story) => story.status === 'todo')
+        .sort((a, b) => a.priority - b.priority || a.id - b.id);
+
+    const sections = backlogStories.map((story, index) => `
+        <section class="info-section">
+            <h3>${index + 1}. ${escapeHtml(story.title)}</h3>
+            <p>${escapeHtml(story.description || 'Kirjeldus puudub.')}</p>
+            <p>
+                <span class="info-code">${story.points} p</span>
+                <span class="info-code">${story.acceptanceCriteria.length} ting.</span>
+                <span class="info-code">priority ${story.priority}</span>
+            </p>
+        </section>
+    `).join('');
+
+    openInfoDialog('Backlogi järjekord', sections || '<p>Backlogis ei ole praegu ühtegi storyt.</p>');
+}
+
+function openCommentsInfo() {
+    const storiesWithComments = state.stories.filter((story) => story.comments.length > 0);
+    const sections = storiesWithComments.map((story) => `
+        <section class="info-section">
+            <h3>${escapeHtml(story.title)}</h3>
+            <ul class="info-list">
+                ${story.comments.map((comment) => `
+                    <li>${escapeHtml(comment.text)} <span class="info-code">${escapeHtml(comment.createdAt)}</span></li>
+                `).join('')}
+            </ul>
+        </section>
+    `).join('');
+
+    openInfoDialog('Kommentaarid', sections || '<p>Ühelgi story’l ei ole praegu kommentaare.</p>');
 }
 
 function openApiInfo() {
