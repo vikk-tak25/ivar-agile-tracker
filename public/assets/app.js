@@ -248,7 +248,7 @@ function openBacklogInfo() {
         .sort((a, b) => a.priority - b.priority || a.id - b.id);
 
     const sections = backlogStories.map((story, index) => `
-        <section class="info-section">
+        <button class="info-section info-section-button" data-open-story-id="${story.id}" type="button">
             <h3>${index + 1}. ${escapeHtml(story.title)}</h3>
             <p>${escapeHtml(story.description || 'Kirjeldus puudub.')}</p>
             <p>
@@ -256,10 +256,16 @@ function openBacklogInfo() {
                 <span class="info-code">${story.acceptanceCriteria.length} ting.</span>
                 <span class="info-code">priority ${story.priority}</span>
             </p>
-        </section>
+        </button>
     `).join('');
 
     openInfoDialog('Backlogi järjekord', sections || '<p>Backlogis ei ole praegu ühtegi storyt.</p>');
+    elements.infoDialogBody.querySelectorAll('[data-open-story-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+            elements.infoDialog.close();
+            openDetail(Number(button.dataset.openStoryId));
+        });
+    });
 }
 
 function openCommentsInfo() {
