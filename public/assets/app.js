@@ -7,6 +7,7 @@ const state = {
 
 const elements = {
     message: document.querySelector('#message'),
+    themeToggle: document.querySelector('#themeToggle'),
     search: document.querySelector('#searchInput'),
     statusFilter: document.querySelector('#statusFilter'),
     pointsFilter: document.querySelector('#pointsFilter'),
@@ -27,9 +28,19 @@ const elements = {
     detailComments: document.querySelector('#detailComments'),
     commentForm: document.querySelector('#commentForm'),
     commentInput: document.querySelector('#commentInput'),
+    statStories: document.querySelector('#statStories'),
+    statPoints: document.querySelector('#statPoints'),
+    statCriteria: document.querySelector('#statCriteria'),
+    statComments: document.querySelector('#statComments'),
+    navStoryCount: document.querySelector('#navStoryCount'),
+    navBacklogCount: document.querySelector('#navBacklogCount'),
+    navCommentCount: document.querySelector('#navCommentCount'),
 };
 
+applyTheme(localStorage.getItem('agileTrackerTheme') || 'light');
+
 document.querySelector('#newStoryButton').addEventListener('click', () => openForm());
+elements.themeToggle.addEventListener('click', toggleTheme);
 document.querySelector('#closeDetailButton').addEventListener('click', closeDetail);
 document.querySelector('#editStoryButton').addEventListener('click', () => {
     const story = selectedStory();
@@ -84,9 +95,39 @@ function render() {
         document.querySelector(`#${status}Points`).textContent = `${points} p`;
     });
 
+    updateStats(filtered);
+
     if (state.selectedId) {
         renderDetail();
     }
+}
+
+function updateStats(filtered) {
+    const totalPoints = filtered.reduce((sum, story) => sum + story.points, 0);
+    const totalCriteria = filtered.reduce((sum, story) => sum + story.acceptanceCriteria.length, 0);
+    const totalComments = filtered.reduce((sum, story) => sum + story.comments.length, 0);
+    const backlogCount = state.stories.filter((story) => story.status === 'todo').length;
+    const commentCount = state.stories.reduce((sum, story) => sum + story.comments.length, 0);
+
+    elements.statStories.textContent = filtered.length;
+    elements.statPoints.textContent = totalPoints;
+    elements.statCriteria.textContent = totalCriteria;
+    elements.statComments.textContent = totalComments;
+    elements.navStoryCount.textContent = state.stories.length;
+    elements.navBacklogCount.textContent = backlogCount;
+    elements.navCommentCount.textContent = commentCount;
+}
+
+function toggleTheme() {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+    localStorage.setItem('agileTrackerTheme', nextTheme);
+}
+
+function applyTheme(theme) {
+    const normalized = theme === 'dark' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = normalized;
+    elements.themeToggle.textContent = normalized === 'dark' ? 'Hele teema' : 'Tume teema';
 }
 
 function filteredStories() {
@@ -369,4 +410,3 @@ async function request(url, options = {}) {
 function showMessage(text) {
     elements.message.textContent = text;
 }
-

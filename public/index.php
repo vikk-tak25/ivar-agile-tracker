@@ -30,60 +30,106 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=3">
+    <link rel="stylesheet" href="/assets/styles.css?v=4">
 </head>
 <body>
-    <header class="topbar">
-        <div>
-            <h1>Agile Tracker</h1>
-            <p>Kanban-laud kasutajalugude, punktide, vastuvõtutingimuste ja kommentaaride jaoks.</p>
-        </div>
-        <button class="primary-button" id="newStoryButton" type="button">+ Uus story</button>
-    </header>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Peamenüü">
+            <div class="brand">
+                <div class="brand-mark">A</div>
+                <div>
+                    <h1>Agile Tracker</h1>
+                    <p>user stories · kanban · punktid</p>
+                </div>
+            </div>
 
-    <main>
-        <section class="toolbar" aria-label="Otsing ja filtrid">
-            <label>
-                Otsing
-                <input id="searchInput" type="search" placeholder="Pealkiri või kirjeldus">
-            </label>
-            <label>
-                Staatus
-                <select id="statusFilter">
-                    <option value="">Kõik</option>
-                    <option value="todo">Todo / Backlog</option>
-                    <option value="doing">Doing</option>
-                    <option value="done">Done</option>
-                </select>
-            </label>
-            <label>
-                Punktid
-                <select id="pointsFilter">
-                    <option value="">Kõik</option>
-                    <option value="0-3">0-3</option>
-                    <option value="4-8">4-8</option>
-                    <option value="9+">9+</option>
-                </select>
-            </label>
-        </section>
+            <div class="nav-label">Töölaud</div>
+            <button class="nav-item active" type="button"><span>Kanban</span><span class="nav-pill" id="navStoryCount">0</span></button>
+            <button class="nav-item" type="button"><span>Backlog</span><span class="nav-pill" id="navBacklogCount">0</span></button>
+            <button class="nav-item" type="button"><span>Kommentaarid</span><span class="nav-pill" id="navCommentCount">0</span></button>
 
-        <p class="message" id="message" role="status"></p>
+            <div class="nav-label">Projekt</div>
+            <button class="nav-item" type="button"><span>Vastuvõtutingimused</span></button>
+            <button class="nav-item" type="button"><span>REST API</span></button>
+            <button class="nav-item" type="button"><span>SQLite</span></button>
 
-        <section class="board" aria-label="Kanban-laud">
-            <article class="column" data-status="todo">
-                <header><h2>Todo / Backlog</h2><span id="todoPoints">0 p</span></header>
-                <div class="story-list" id="todoList" data-status="todo"></div>
-            </article>
-            <article class="column" data-status="doing">
-                <header><h2>Doing</h2><span id="doingPoints">0 p</span></header>
-                <div class="story-list" id="doingList" data-status="doing"></div>
-            </article>
-            <article class="column" data-status="done">
-                <header><h2>Done</h2><span id="donePoints">0 p</span></header>
-                <div class="story-list" id="doneList" data-status="done"></div>
-            </article>
-        </section>
-    </main>
+            <div class="sidebar-card">
+                <strong>PHP + SQLite</strong>
+                <p>REST API salvestab story’d, kommentaarid ja backlogi järjekorra SQLite andmebaasi.</p>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div class="page-title">
+                    <h2>Kanban-laud</h2>
+                    <p>Kasutajalood, punktid, vastuvõtutingimused ja kommentaarid ühes töövaates.</p>
+                </div>
+                <div class="top-actions">
+                    <button class="theme-button" id="themeToggle" type="button">Tume teema</button>
+                    <button class="primary-button" id="newStoryButton" type="button">+ Uus story</button>
+                </div>
+            </header>
+
+            <section class="toolbar" aria-label="Otsing ja filtrid">
+                <label>
+                    Otsing
+                    <input id="searchInput" type="search" placeholder="Pealkiri või kirjeldus">
+                </label>
+                <label>
+                    Staatus
+                    <select id="statusFilter">
+                        <option value="">Kõik</option>
+                        <option value="todo">Todo / Backlog</option>
+                        <option value="doing">Doing</option>
+                        <option value="done">Done</option>
+                    </select>
+                </label>
+                <label>
+                    Punktid
+                    <select id="pointsFilter">
+                        <option value="">Kõik</option>
+                        <option value="0-3">0-3</option>
+                        <option value="4-8">4-8</option>
+                        <option value="9+">9+</option>
+                    </select>
+                </label>
+            </section>
+
+            <section class="stats-grid" aria-label="Ülevaade">
+                <article class="stat-card"><span>Storysid</span><strong id="statStories">0</strong></article>
+                <article class="stat-card"><span>Punkte kokku</span><strong id="statPoints">0</strong></article>
+                <article class="stat-card"><span>Tingimusi</span><strong id="statCriteria">0</strong></article>
+                <article class="stat-card"><span>Kommentaare</span><strong id="statComments">0</strong></article>
+            </section>
+
+            <p class="message" id="message" role="status"></p>
+
+            <section class="board" aria-label="Kanban-laud">
+                <article class="column" data-status="todo">
+                    <header>
+                        <div class="column-title"><span class="dot todo"></span><h2>Todo / Backlog</h2></div>
+                        <span id="todoPoints">0 p</span>
+                    </header>
+                    <div class="story-list" id="todoList" data-status="todo"></div>
+                </article>
+                <article class="column" data-status="doing">
+                    <header>
+                        <div class="column-title"><span class="dot doing"></span><h2>Doing</h2></div>
+                        <span id="doingPoints">0 p</span>
+                    </header>
+                    <div class="story-list" id="doingList" data-status="doing"></div>
+                </article>
+                <article class="column" data-status="done">
+                    <header>
+                        <div class="column-title"><span class="dot done"></span><h2>Done</h2></div>
+                        <span id="donePoints">0 p</span>
+                    </header>
+                    <div class="story-list" id="doneList" data-status="done"></div>
+                </article>
+            </section>
+        </main>
+    </div>
 
     <dialog id="storyDialog">
         <form id="storyForm" method="dialog">
@@ -133,6 +179,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </aside>
 
-    <script src="/assets/app.js?v=3"></script>
+    <script src="/assets/app.js?v=4"></script>
 </body>
 </html>
