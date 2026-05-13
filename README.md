@@ -28,6 +28,7 @@ Andmebaas luuakse automaatselt faili `data/agile_tracker.sqlite`. Kui andmebaas 
 
 - Story’de kuvamine kolmes Kanban-veerus.
 - Story lisamine, muutmine ja kustutamine.
+- Story väljade automaatne genereerimine probleemi kirjelduse põhjal.
 - Story detailvaade.
 - Staatused `todo`, `doing` ja `done`.
 - Punktide sisestamine ja valideerimine.

@@ -25,6 +25,8 @@ const elements = {
     storyForm: document.querySelector('#storyForm'),
     dialogTitle: document.querySelector('#dialogTitle'),
     storyId: document.querySelector('#storyId'),
+    problem: document.querySelector('#problemInput'),
+    generateStoryButton: document.querySelector('#generateStoryButton'),
     title: document.querySelector('#titleInput'),
     description: document.querySelector('#descriptionInput'),
     points: document.querySelector('#pointsInput'),
@@ -54,6 +56,7 @@ document.querySelector('#newStoryButton').addEventListener('click', () => openFo
 elements.themeToggle.addEventListener('click', toggleTheme);
 elements.closeInfoDialogButton.addEventListener('click', () => elements.infoDialog.close());
 elements.closeInlineViewButton.addEventListener('click', closeInlineView);
+elements.generateStoryButton.addEventListener('click', generateStoryFromProblem);
 elements.navItems.forEach((button) => {
     button.addEventListener('click', () => handleNavAction(button.dataset.navAction));
 });
@@ -462,6 +465,7 @@ function boardOrder() {
 function openForm(story = null) {
     elements.dialogTitle.textContent = story ? 'Muuda storyt' : 'Uus story';
     elements.storyId.value = story?.id ?? '';
+    elements.problem.value = '';
     elements.title.value = story?.title ?? '';
     elements.description.value = story?.description ?? '';
     elements.points.value = story?.points ?? '';
@@ -469,6 +473,92 @@ function openForm(story = null) {
     elements.criteria.value = story?.acceptanceCriteria.join('\n') ?? '';
     showMessage('');
     elements.storyDialog.showModal();
+}
+
+function generateStoryFromProblem() {
+    const problem = elements.problem.value.trim();
+    if (!problem) {
+        showMessage('Kirjelda kõigepealt probleemi, mille põhjal story genereerida.');
+        return;
+    }
+
+    const cleanProblem = problem.replace(/\s+/g, ' ');
+    const lowerProblem = cleanProblem.toLowerCase();
+    const action = inferAction(lowerProblem);
+    const object = inferObject(cleanProblem, lowerProblem);
+    const points = inferPoints(lowerProblem);
+
+    elements.title.value = `Kasutajana tahan ${action} ${object}, et töövoog oleks selgem ja kiirem.`;
+    elements.description.value = `Probleem: ${cleanProblem}\n\nLahendus: kasutaja saab ${action} ${object} otse Agile Trackeris ning muudatus salvestatakse süsteemi.`;
+    elements.points.value = points;
+    elements.status.value = 'todo';
+    elements.criteria.value = [
+        'Kasutaja saab vajaliku tegevuse vormist käivitada.',
+        'Süsteem valideerib sisendi ja näitab arusaadavat veateadet.',
+        'Õnnestunud tegevuse järel kuvatakse uuendatud info Kanban-laual.',
+        'Muudatus salvestatakse ja jääb alles pärast lehe uuendamist.',
+    ].join('\n');
+    showMessage('Story väljad genereeriti probleemi kirjelduse põhjal.');
+}
+
+function inferAction(problem) {
+    if (problem.includes('kustuta') || problem.includes('eemalda')) {
+        return 'kustutada';
+    }
+    if (problem.includes('muuta') || problem.includes('redigeerida') || problem.includes('parandada')) {
+        return 'muuta';
+    }
+    if (problem.includes('otsida') || problem.includes('leida')) {
+        return 'otsida';
+    }
+    if (problem.includes('filtreerida')) {
+        return 'filtreerida';
+    }
+    if (problem.includes('komment')) {
+        return 'lisada kommentaare';
+    }
+    if (problem.includes('näha') || problem.includes('vaadata') || problem.includes('kuvada')) {
+        return 'näha';
+    }
+    return 'hallata';
+}
+
+function inferObject(original, lowerProblem) {
+    const knownObjects = [
+        ['story', 'storyt'],
+        ['komment', 'kommentaare'],
+        ['backlog', 'backlogi järjekorda'],
+        ['punkt', 'punkte'],
+        ['staatus', 'staatust'],
+        ['vastuvõtutingimus', 'vastuvõtutingimusi'],
+        ['broneering', 'broneeringut'],
+        ['kasutaja', 'kasutaja andmeid'],
+    ];
+
+    const match = knownObjects.find(([needle]) => lowerProblem.includes(needle));
+    if (match) {
+        return match[1];
+    }
+
+    const words = original
+        .replace(/[^\p{L}\p{N}\s-]/gu, '')
+        .split(/\s+/)
+        .filter((word) => word.length > 4);
+
+    return words.slice(0, 4).join(' ').toLowerCase() || 'seda probleemi';
+}
+
+function inferPoints(problem) {
+    const complexWords = ['mitu', 'keeruline', 'integratsioon', 'andmebaas', 'õigused', 'rollid', 'drag', 'lohist'];
+    const easyWords = ['tekst', 'värv', 'nupp', 'väike', 'lihtne'];
+
+    if (complexWords.some((word) => problem.includes(word))) {
+        return 8;
+    }
+    if (easyWords.some((word) => problem.includes(word))) {
+        return 2;
+    }
+    return 5;
 }
 
 async function saveStory(event) {

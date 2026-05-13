@@ -545,6 +545,19 @@ dialog::backdrop {
     padding: 20px;
 }
 
+.generator-box {
+    background: color-mix(in srgb, var(--panel-soft) 70%, var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+}
+
+.generator-box button {
+    justify-self: start;
+}
+
 .info-dialog-content {
     display: grid;
     gap: 16px;

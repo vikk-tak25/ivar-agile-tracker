@@ -30,7 +30,7 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=12">
+    <link rel="stylesheet" href="/assets/styles.css?v=13">
 </head>
 <body>
     <div class="app-shell">
@@ -149,6 +149,10 @@ if (str_starts_with($path, '/api/')) {
                 <button class="icon-button" type="button" data-close-dialog>×</button>
             </div>
             <input id="storyId" type="hidden">
+            <section class="generator-box">
+                <label>Kirjelda probleemi<textarea id="problemInput" rows="3" placeholder="Näiteks: kasutaja ei saa broneeringut tühistada ja vajab tühistamise võimalust"></textarea></label>
+                <button class="theme-button" id="generateStoryButton" type="button">Genereeri story</button>
+            </section>
             <label>Pealkiri<input id="titleInput" required></label>
             <label>Kirjeldus<textarea id="descriptionInput" rows="4"></textarea></label>
             <div class="form-grid">
@@ -202,6 +206,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </dialog>
 
-    <script src="/assets/app.js?v=12"></script>
+    <script src="/assets/app.js?v=13"></script>
 </body>
 </html>
