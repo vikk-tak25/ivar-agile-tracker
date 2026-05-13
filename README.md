@@ -55,6 +55,14 @@ Andmebaas luuakse automaatselt faili `data/agile_tracker.sqlite`. Kui andmebaas 
 - Story lohistamine veergude vahel nii, et sama tegevus muudaks ka staatust.
 - Punktide ja vastuvõtutingimuste valideerimine nii frontend’is kui REST API-s.
 
+## Valideerimise reeglid
+
+- Pealkiri on kohustuslik.
+- Punktid on kohustuslikud, peavad olema täisarvud ja ei tohi olla negatiivsed.
+- Staatus peab olema `todo`, `doing` või `done`.
+- Igal story’l peab olema vähemalt üks vastuvõtutingimus.
+- Kommentaari tekst ei tohi olla tühi.
+
 ## REST API endpoint’id
 
 | Meetod | Endpoint | Kirjeldus |
@@ -97,4 +105,3 @@ Testid käivitavad ajutise PHP serveri ja kasutavad ajutist SQLite andmebaasi.
 ## Ekraanipilt
 
 Lisa töötava Kanban-laua ekraanipilt kausta `screenshots/` ja viita sellele siin enne töö esitamist.
-
