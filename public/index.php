@@ -30,7 +30,7 @@ if (str_starts_with($path, '/api/')) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agile Tracker</title>
-    <link rel="stylesheet" href="/assets/styles.css?v=5">
+    <link rel="stylesheet" href="/assets/styles.css?v=6">
 </head>
 <body>
     <div class="app-shell">
@@ -158,6 +158,16 @@ if (str_starts_with($path, '/api/')) {
         </form>
     </dialog>
 
+    <dialog id="infoDialog">
+        <div class="info-dialog-content">
+            <div class="dialog-header">
+                <h2 id="infoDialogTitle">Info</h2>
+                <button class="icon-button" type="button" id="closeInfoDialogButton">×</button>
+            </div>
+            <div class="info-body" id="infoDialogBody"></div>
+        </div>
+    </dialog>
+
     <aside class="detail-panel" id="detailPanel" aria-live="polite" hidden>
         <div class="detail-header">
             <h2 id="detailTitle"></h2>
@@ -179,6 +189,6 @@ if (str_starts_with($path, '/api/')) {
         </div>
     </aside>
 
-    <script src="/assets/app.js?v=5"></script>
+    <script src="/assets/app.js?v=6"></script>
 </body>
 </html>

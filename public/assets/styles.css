@@ -491,6 +491,14 @@ dialog::backdrop {
     padding: 20px;
 }
 
+.info-dialog-content {
+    display: grid;
+    gap: 16px;
+    max-height: min(760px, calc(100vh - 40px));
+    overflow: auto;
+    padding: 20px;
+}
+
 .dialog-header,
 .detail-header {
     align-items: center;
@@ -502,6 +510,51 @@ dialog::backdrop {
 .dialog-header h2,
 .detail-header h2 {
     margin: 0;
+}
+
+.info-body {
+    display: grid;
+    gap: 12px;
+}
+
+.info-section {
+    background: color-mix(in srgb, var(--panel-soft) 52%, var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.info-section h3 {
+    font-size: 15px;
+    margin: 0 0 8px;
+}
+
+.info-section p {
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.info-list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding-left: 20px;
+}
+
+.info-list li {
+    line-height: 1.45;
+}
+
+.info-code {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 0;
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 13px;
+    margin-top: 6px;
+    padding: 6px 8px;
 }
 
 .form-grid {
