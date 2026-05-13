@@ -626,18 +626,13 @@ menu {
 }
 
 .detail-panel {
-    background: var(--panel);
-    border-left: 1px solid var(--line);
-    bottom: 0;
-    box-shadow: -24px 0 60px rgb(16 33 47 / 16%);
+    background: color-mix(in srgb, var(--panel) 90%, transparent);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
     color: var(--text);
-    overflow-y: auto;
+    margin-bottom: 18px;
     padding: 20px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: min(520px, 100vw);
-    z-index: 10;
 }
 
 .detail-panel h3 {

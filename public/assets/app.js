@@ -514,6 +514,7 @@ function openDetail(id) {
     state.selectedId = id;
     renderDetail();
     elements.detailPanel.hidden = false;
+    elements.detailPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function closeDetail() {
