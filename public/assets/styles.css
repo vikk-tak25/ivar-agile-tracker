@@ -1,37 +1,37 @@
 :root {
     color-scheme: light;
-    --bg: #f4f7f9;
+    --bg: #eef5ff;
     --panel: #ffffff;
-    --panel-soft: #eef4f7;
-    --text: #10212f;
-    --muted: #66788a;
-    --line: #d9e3ea;
-    --line-strong: #c2d2dc;
-    --accent: #2563eb;
-    --accent-dark: #1d4ed8;
+    --panel-soft: #e8f1ff;
+    --text: #0f1f3a;
+    --muted: #52677f;
+    --line: #cfe0f6;
+    --line-strong: #a9c4ea;
+    --accent: #1f6feb;
+    --accent-dark: #174ea6;
     --danger: #b42318;
     --todo: #f4c542;
     --doing: #4389d8;
     --done: #34a853;
-    --sidebar: #0f2430;
-    --sidebar-text: #d7e8ee;
-    --shadow: 0 16px 40px rgb(16 33 47 / 8%);
+    --sidebar: #0b2f6b;
+    --sidebar-text: #dbeafe;
+    --shadow: 0 16px 40px rgb(31 111 235 / 10%);
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #0e171d;
-    --panel: #16242d;
-    --panel-soft: #1c303a;
+    --bg: #081426;
+    --panel: #10213a;
+    --panel-soft: #132b4d;
     --text: #eef7fa;
     --muted: #9bb1bf;
-    --line: #2d4552;
-    --line-strong: #42606f;
+    --line: #27466f;
+    --line-strong: #3b64a0;
     --accent: #60a5fa;
     --accent-dark: #93c5fd;
     --danger: #ff8d83;
-    --sidebar: #07131a;
+    --sidebar: #061b3f;
     --sidebar-text: #d7e8ee;
     --shadow: 0 18px 44px rgb(0 0 0 / 26%);
 }
@@ -43,7 +43,7 @@
 body {
     margin: 0;
     background:
-        radial-gradient(circle at top left, rgb(37 99 235 / 10%), transparent 34rem),
+        radial-gradient(circle at top left, rgb(31 111 235 / 18%), transparent 34rem),
         linear-gradient(180deg, color-mix(in srgb, var(--panel) 42%, var(--bg)) 0%, var(--bg) 34%);
     color: var(--text);
     min-height: 100vh;
@@ -94,7 +94,7 @@ button:hover {
 }
 
 .brand-mark {
-    background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+    background: linear-gradient(135deg, #0b5ed7, #38bdf8);
     border-radius: 14px;
     box-shadow: 0 14px 28px rgb(0 0 0 / 22%);
     color: #fff;
@@ -113,13 +113,13 @@ button:hover {
 }
 
 .brand p {
-    color: #9fb6c1;
+    color: #bfdbfe;
     font-size: 12px;
     margin: 3px 0 0;
 }
 
 .nav-label {
-    color: #7f99a8;
+    color: #93c5fd;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: .08em;
@@ -131,7 +131,7 @@ button:hover {
     align-items: center;
     background: transparent;
     border: 0;
-    color: #cce0e7;
+    color: #dbeafe;
     display: flex;
     justify-content: space-between;
     margin-bottom: 6px;
@@ -142,12 +142,12 @@ button:hover {
 
 .nav-item.active,
 .nav-item:hover {
-    background: rgb(255 255 255 / 8%);
+    background: rgb(96 165 250 / 24%);
     color: #fff;
 }
 
 .nav-pill {
-    background: rgb(255 255 255 / 10%);
+    background: rgb(96 165 250 / 30%);
     border-radius: 999px;
     color: #f6fbfd;
     font-size: 12px;
@@ -157,8 +157,8 @@ button:hover {
 }
 
 .sidebar-card {
-    background: rgb(255 255 255 / 6%);
-    border: 1px solid rgb(255 255 255 / 10%);
+    background: rgb(96 165 250 / 14%);
+    border: 1px solid rgb(147 197 253 / 26%);
     border-radius: 16px;
     margin-top: 26px;
     padding: 14px;
@@ -172,7 +172,7 @@ button:hover {
 }
 
 .sidebar-card p {
-    color: #a9c0ca;
+    color: #bfdbfe;
     font-size: 12px;
     line-height: 1.5;
     margin: 0;
